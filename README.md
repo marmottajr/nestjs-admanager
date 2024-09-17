@@ -39,10 +39,14 @@ import { AdManagerModule } from 'nestjs-admanager';
 @Module({
   imports: [
     AdManagerModule.forRoot({
-      web: {
-        client_id: 'YOUR_CLIENT_ID',
-        client_secret: 'YOUR_CLIENT_SECRET',
-        redirect_uris: ['YOUR_REDIRECT_URI'],
+      network_code: 'YOUR_NETWORK_CODE',
+      application_name: 'YOUR_APPLICATION_NAME',
+      keys: {
+        web: {
+          client_id: 'YOUR_CLIENT_ID',
+          client_secret: 'YOUR_CLIENT_SECRET',
+          redirect_uris: ['YOUR_REDIRECT_URI'],
+        },
       },
     }),
   ],
@@ -69,10 +73,14 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) => {
         return {
-          web: {
-            client_id: configService.get<string>('CLIENT_ID'),
-            client_secret: configService.get<string>('CLIENT_SECRET'),
-            redirect_uris: [configService.get<string>('REDIRECT_URI')],
+          network_code: configService.get<string>('NETWORK_CODE'),
+          application_name: configService.get<string>('APPLICATION_NAME'),
+          keys: {
+            web: {
+              client_id: configService.get<string>('CLIENT_ID'),
+              client_secret: configService.get<string>('CLIENT_SECRET'),
+              redirect_uris: [configService.get<string>('REDIRECT_URI')],
+            },
           },
         };
       },
