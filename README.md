@@ -1,13 +1,8 @@
-<p align="center">
-  <a href="https://developers.google.com/ad-manager/api/start" target="blank"><img src="https://developers.google.com/ads/images/logo_admanager_192px.svg" width="120" alt="Ad Manager Logo" /></a>
-</p>
+# Nestjs-AdManager
 
-  <p align="center"><a href="https://developers.google.com/ad-manager/api/start" target="_blank">Google Ad Manager API</a> Client Library for NestJs.</p>
-    <p align="center">
-    <img alt="NPM License" src="https://img.shields.io/npm/l/nestjs-admanager">
-</p>
+## Google Ad Manager API Client Library for NestJs
 
-**Client Library for NodeJs**
+![npm nestjs-admanager](https://img.shields.io/npm/l/nestjs-admanager)
 
 ## Descrição
 
