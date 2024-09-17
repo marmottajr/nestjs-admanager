@@ -23,7 +23,7 @@ export class AdUnitsService extends AdServiceBase {
 
       const request = {
         filterStatement: {
-          query: 'LIMIT 10'
+          query: ''
         }
       };
 
@@ -44,12 +44,12 @@ export class AdUnitsService extends AdServiceBase {
 
       const request = {
         filterStatement: {
-          query: 'LIMIT 10'
+          query: `LIMIT 10`
         }
       };
 
       const result = await client.getAdUnitSizesByStatementAsync(request);
-      return result[0].rval.results;
+      return result[0].rval;
     } catch (error) {
       console.error('Error fetching AdUnitSizes:', error);
       throw error;
