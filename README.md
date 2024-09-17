@@ -4,7 +4,7 @@
 
   <p align="center"><a href="https://developers.google.com/ad-manager/api/start" target="_blank">Google Ad Manager API</a> Client Library for NestJs.</p>
     <p align="center">
-    <img alt="NPM License" src="https://img.shields.io/npm/l/admanager-nestjs">
+    <img alt="NPM License" src="https://img.shields.io/npm/l/nestjs-admanager">
 </p>
 
 **Client Library for NodeJs**
