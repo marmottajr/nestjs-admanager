@@ -1,20 +1,33 @@
-name: Node.js Package
+name: Publish to npm
 
 on:
   release:
     types: [created]
 
 jobs:
-  publish-npm:
+  build-and-publish:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20' # ou a versão do Node que você estiver usando
           registry-url: https://registry.npmjs.org/
-      - run: npm ci
-      - run: npm build
-      - run: npm publish
+
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Publish to npm
         env:
-          NODE_AUTH_TOKEN: ${{secrets.npm_token}}
+          NODE_AUTH_TOKEN: ${{ secrets.npm_token }}
+        run: npm publish --access public
+
+      - name: Clean up build artifacts
+        run: rm -rf dist # Substitua "dist" pelo diretório onde o build é gerado, se necessário

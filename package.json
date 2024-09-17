@@ -1,6 +1,10 @@
 {
   "name": "nestjs-admanager",
-  "version": "1.0.7",
+  "version": "1.0.8",
+  "description": "",
+  "license": "MIT",
+  "author": "Márcio Motta",
+  "git": "https://github.com/marmottajr/nestjs-admanager",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
@@ -12,10 +16,10 @@
     "Google Ad Manager",
     "Google Ad Manager API"
   ],
-  "author": "Márcio Motta",
-  "git": "https://github.com/marmottajr/admanager-nestjs",
-  "license": "MIT",
-  "description": "",
+  "files": [
+    "dist",
+    "!dist/**/*.map"
+  ],
   "devDependencies": {
     "@types/node": "^22.5.5",
     "typescript": "^5.6.2"
