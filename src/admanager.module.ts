@@ -5,6 +5,8 @@ import { OAuth2Client } from 'google-auth-library';
 import { AdManagerService } from './admanager.service';
 import { AdManagerKeys } from './interface/admanager.interface';
 
+export * from './admanager.service';
+
 @Module({})
 export class AdManagerModule {
   static forRoot(options: AdManagerKeys): DynamicModule {
