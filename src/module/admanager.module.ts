@@ -1,16 +1,16 @@
-// src/module/gam/admanager.module.ts
+// src/module/admanager.module.ts
 
 import { DynamicModule, Module } from '@nestjs/common';
 import { OAuth2Client } from 'google-auth-library';
-import { AdManagerService } from './admanager.service';
-import { AdManagerKeys } from './interface/admanager.interface';
+import { AdManagerService } from '../service/admanager.service';
+import { AdManagerModuleOptions } from '../interface/admanager.interface';
 
-export * from './admanager.service';
+export * from '../service/admanager.service';
 
 @Module({})
 export class AdManagerModule {
-  static forRoot(options: AdManagerKeys): DynamicModule {
-    const { client_id, client_secret, redirect_uris } = options.web;
+  static forRoot(options: AdManagerModuleOptions): DynamicModule {
+    const { client_id, client_secret, redirect_uris } = options.keys.web;
 
     // Cria o OAuth2Client usando as credenciais fornecidas
     const oAuth2Client = new OAuth2Client(
@@ -26,6 +26,9 @@ export class AdManagerModule {
         {
           provide: 'AD_MANAGER_OPTIONS',
           useValue: {
+            network_code: options.network_code,
+            application_name: options.application_name,
+            api_version: options.api_version,
             oAuth2Client,
           },
         },
@@ -38,7 +41,7 @@ export class AdManagerModule {
   static forRootAsync(options: {
     imports: any[];
     inject: any[];
-    useFactory: (...args: any[]) => Promise<AdManagerKeys>;
+    useFactory: (...args: any[]) => Promise<AdManagerModuleOptions>;
   }): DynamicModule {
     return {
       module: AdManagerModule,
@@ -49,8 +52,8 @@ export class AdManagerModule {
           provide: 'AD_MANAGER_OPTIONS',
           inject: options.inject,
           useFactory: async (...args: any[]) => {
-            const keys = await options.useFactory(...args);
-            const { client_id, client_secret, redirect_uris } = keys.web;
+            const optionsFactory = await options.useFactory(...args);
+            const { client_id, client_secret, redirect_uris } = optionsFactory.keys.web;
 
             const oAuth2Client = new OAuth2Client(
               client_id,
@@ -59,6 +62,9 @@ export class AdManagerModule {
             );
 
             return {
+              network_code: optionsFactory.network_code,
+              application_name: optionsFactory.application_name,
+              api_version: optionsFactory.api_version,
               oAuth2Client,
             };
           },
