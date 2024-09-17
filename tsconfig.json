@@ -11,8 +11,11 @@
     "target": "es2017",
     "sourceMap": true,
     "outDir": "./dist",
-    "baseUrl": "./","paths": {
-      "@app/*": ["src/*"] 
+    "baseUrl": "./",
+    "paths": {
+      "@app/*": [
+        "src/*"
+      ]
     },
     "incremental": true,
     "skipLibCheck": true,
