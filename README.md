@@ -2,47 +2,47 @@
 
 ## Google Ad Manager API Client Library for NestJs
 
-![npm nestjs-admanager](https://img.shields.io/npm/l/nestjs-admanager)
+[![npm nestjs-admanager](https://img.shields.io/npm/l/nestjs-admanager)](https://www.npmjs.com/package/nestjs-admanager)
 
-## Descrição
+## Description
 
-`admanager-nestjs` é um pacote npm que facilita a integração de projetos NestJS com a API do Google Ad Manager. Ele fornece uma interface simplificada para autenticação, gerenciamento de unidades de anúncio e outras funcionalidades disponíveis na API, permitindo que você construa aplicações robustas com rapidez e eficiência.
+`nestjs-admanager` is an npm package that facilitates the integration of NestJS projects with the Google Ad Manager API. It provides a simplified interface for authentication, ad unit management, and other functionalities available in the API, allowing you to build robust applications quickly and efficiently.
 
-## Instalação
+## Installation
 
-Você pode instalar o pacote usando npm:
-
-```bash
-npm install admanager-nestjs
-```
-
-Ou usando yarn:
+You can install the package using npm:
 
 ```bash
-yarn add admanager-nestjs
+npm install nestjs-admanager
 ```
 
-## Configuração
+Or using yarn:
 
-Antes de utilizar o `admanager-nestjs`, você precisará configurar as credenciais de acesso à API do Google Ad Manager.
+```bash
+yarn add nestjs-admanager
+```
 
-### Configuração Síncrona com `forRoot`
+## Configuration
 
-Se você possui as credenciais disponíveis no momento da inicialização, pode configurar o módulo de forma síncrona:
+Before using `nestjs-admanager`, you need to configure access credentials for the Google Ad Manager API.
+
+### Synchronous Configuration with `forRoot`
+
+If you have the credentials available at initialization, you can configure the module synchronously:
 
 ```typescript
 // app.module.ts
 
 import { Module } from '@nestjs/common';
-import { AdManagerModule } from 'admanager-nestjs';
+import { AdManagerModule } from 'nestjs-admanager';
 
 @Module({
   imports: [
     AdManagerModule.forRoot({
       web: {
-        client_id: 'SEU_CLIENT_ID',
-        client_secret: 'SEU_CLIENT_SECRET',
-        redirect_uris: ['SEU_REDIRECT_URI'],
+        client_id: 'YOUR_CLIENT_ID',
+        client_secret: 'YOUR_CLIENT_SECRET',
+        redirect_uris: ['YOUR_REDIRECT_URI'],
       },
     }),
   ],
@@ -50,15 +50,15 @@ import { AdManagerModule } from 'admanager-nestjs';
 export class AppModule {}
 ```
 
-### Configuração Assíncrona com `forRootAsync`
+### Asynchronous Configuration with `forRootAsync`
 
-Caso precise carregar as credenciais de forma assíncrona, use o método `forRootAsync`:
+If you need to load the credentials asynchronously, use the `forRootAsync` method:
 
 ```typescript
 // app.module.ts
 
 import { Module } from '@nestjs/common';
-import { AdManagerModule } from 'admanager-nestjs';
+import { AdManagerModule } from 'nestjs-admanager';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
@@ -82,17 +82,17 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
 export class AppModule {}
 ```
 
-## Uso
+## Usage
 
-Após configurar o módulo, você pode injetar o `AdManagerService` em seus serviços ou controladores.
+After configuring the module, you can inject the `AdManagerService` into your services or controllers.
 
-### Autenticação
+### Authentication
 
 ```typescript
 // auth.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { AdManagerService } from 'admanager-nestjs';
+import { AdManagerService } from 'nestjs-admanager';
 
 @Injectable()
 export class AuthService {
@@ -104,18 +104,18 @@ export class AuthService {
 
   async authenticate(code: string): Promise<void> {
     const token = await this.adManagerService.getToken(code);
-    // Salve o token para uso futuro
+    // Save the token for future use
   }
 }
 ```
 
-### Gerenciamento de Unidades de Anúncio
+### Ad Unit Management
 
 ```typescript
 // adunit.service.ts
 
 import { Injectable } from '@nestjs/common';
-import { AdManagerService } from 'admanager-nestjs';
+import { AdManagerService } from 'nestjs-admanager';
 
 @Injectable()
 export class AdUnitService {
@@ -127,23 +127,23 @@ export class AdUnitService {
 }
 ```
 
-## Licença
+## License
 
-Este projeto está licenciado sob a **GNU General Public License v3.0 ou posterior**. Consulte o arquivo [LICENSE](./LICENSE) para obter mais detalhes.
+This project is licensed under the **GNU General Public License v3.0 or later**. See the [LICENSE](./LICENSE) file for details.
 
-## Autor
+## Author
 
 - **Márcio Motta** - [Marmottajr](https://github.com/marmottajr)
 
-## Referências
+## References
 
-- [Documentação da API do Google Ad Manager](https://developers.google.com/ad-manager/api)
+- [Google Ad Manager API Documentation](https://developers.google.com/ad-manager/api)
 - [NestJS Documentation](https://docs.nestjs.com/)
 
-## Agradecimentos
+## Acknowledgments
 
-Agradecemos a todos que contribuíram para este projeto e à comunidade open-source por seu suporte contínuo.
+We would like to thank everyone who contributed to this project and the open-source community for their continued support.
 
-## Aviso Legal
+## Disclaimer
 
-Este projeto não é afiliado, associado, autorizado, endossado ou de qualquer forma oficialmente conectado ao Google ou a qualquer uma de suas subsidiárias ou afiliadas. Os nomes Google e Google Ad Manager, bem como marcas relacionadas, nomes, marcas registradas e imagens são marcas registradas de propriedade de seus respectivos proprietários.
+This project is not affiliated, associated, authorized, endorsed by, or in any way officially connected with Google or any of its subsidiaries or affiliates. The names Google and Google Ad Manager, as well as related names, trademarks, and images, are registered trademarks of their respective owners.
