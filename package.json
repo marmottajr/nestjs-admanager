@@ -1,10 +1,17 @@
 {
   "name": "nestjs-admanager",
-  "version": "1.0.10",
+  "version": "1.0.11",
   "description": "",
   "license": "MIT",
   "author": "Márcio Motta",
-  "git": "https://github.com/marmottajr/nestjs-admanager",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/marmottajr/nestjs-admanager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/marmottajr/nestjs-admanager/issues"
+  },
+  "homepage": "https://github.com/marmottajr/nestjs-admanager",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
