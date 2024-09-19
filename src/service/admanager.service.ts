@@ -6,6 +6,7 @@ import { AdUnitsService } from './adunits.service';
 import { OAuth2Client } from 'google-auth-library';
 import { AdManagerServiceOptions } from '../types/admanager.interface';
 import { NetworkService } from './network.service';
+import { SiteService } from './site.service';
 
 /**
  * Service responsible for managing Google Ad Manager integrations.
@@ -47,6 +48,12 @@ export class AdManagerService {
   public network: NetworkService;
 
   /**
+   * Service to manage site.
+   * @public
+   */
+  public site: SiteService;
+
+  /**
    * The Google Ad Manager network code.
    * @public
    */
@@ -59,7 +66,7 @@ export class AdManagerService {
   public application_name: string | null;
 
   /**
-   * Version of the Google Ad Manager API being used. Defaults to v202405.
+   * Version of the Google Ad Manager API being used. Defaults to v202408.
    * @public
    */
   public api_version: string | null;
@@ -70,7 +77,7 @@ export class AdManagerService {
    * @param options - Configuration options for the Ad Manager service.
    * @param options.network_code - The Google Ad Manager network code.
    * @param options.application_name - The name of the application.
-   * @param options.api_version - (Optional) The version of the API. Defaults to 'v202405'.
+   * @param options.api_version - (Optional) The version of the API. Defaults to 'v202408'.
    * @param options.oAuth2Client - OAuth2 client instance used for authentication.
    */
   constructor(
@@ -78,12 +85,13 @@ export class AdManagerService {
   ) {
     this.network_code = options.network_code;
     this.application_name = options.application_name;
-    this.api_version = options.api_version ?? 'v202405';
+    this.api_version = options.api_version ?? 'v202408';
     this.oAuth2Client = options.oAuth2Client;
 
     // Initialize auth and adUnits services
     this.auth = new AuthService(this);
     this.adUnits = new AdUnitsService(this);
     this.network = new NetworkService(this);
+    this.site = new SiteService(this);
   }
 }
