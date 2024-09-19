@@ -30,16 +30,63 @@ export class AuthService {
   }
 
   /**
-   * Retrieves the current access token. If no access token is available, 
-   * it requests a new one from the OAuth2 client and sets it in the AdManagerService.
+   * Refreshes the OAuth2 access token using the existing refresh token.
    * 
-   * @returns A promise that resolves to the access token or null if not available.
+   * This method refreshes the current access token via the OAuth2 client.
+   * 
+   * @returns {Promise<Credentials>} - A promise that resolves to the updated credentials, 
+   * including the new access token and other token-related information.
+   */
+  async refreshToken(): Promise<Credentials> {
+    // Refresh the access token using the OAuth2 client.
+    const tokenResponse = await this.oAuth2Client.refreshAccessToken();
+    // Return the credentials from the token response.
+    return tokenResponse.credentials;
+  }
+
+  /**
+   * Validates the provided access token by checking its information.
+   * 
+   * @param access_token - The access token to be validated.
+   * @returns {Promise<void>} - Resolves if the token is valid; otherwise, it throws an error.
+   */
+  async validateToken(access_token: string): Promise<void> {
+    // Validate the token using the OAuth2 client.
+    await this.oAuth2Client.getTokenInfo(access_token);
+  }
+
+  /**
+   * Authenticates the service by setting the provided access token.
+   * 
+   * This method updates the access token in the AdManagerService for future requests.
+   * It also validates the token before setting it.
+   * 
+   * @param access_token - The OAuth2 access token to be used for authenticating API requests.
+   */
+  async authenticate(access_token: string): Promise<void> {
+    try {
+      // Validate the provided access token.
+      await this.validateToken(access_token);
+      // Set the access token in the AdManagerService.
+      this.adManagerService.access_token = access_token;
+    } catch (error) {
+      console.error('Error authenticating:', error); // Log the error if any.
+      throw error; // Propagate the error.
+    }
+  }
+
+  /**
+   * Retrieves the current access token. If no access token is available,
+   * it requests a new one from the OAuth2 client and stores it.
+   * 
+   * @returns {Promise<string | null>} - A promise that resolves to the access token, 
+   * or null if not available.
    */
   async getAccessToken(): Promise<string | null> {
     // If there's no access token, request one from the OAuth2 client.
     if (!this.adManagerService.access_token) {
       const tokenResponse = await this.oAuth2Client.getAccessToken();
-      // Store the retrieved access token in AdManagerService.
+      // Store the retrieved access token in the AdManagerService.
       this.adManagerService.access_token = tokenResponse.token;
     }
     // Return the access token.
@@ -48,48 +95,40 @@ export class AuthService {
 
   /**
    * Exchanges an authorization code for OAuth2 credentials (tokens).
-   * Once the tokens are retrieved, they are set in the OAuth2 client and the access token is stored.
+   * 
+   * Once the tokens are retrieved, they are set in the OAuth2 client, and the access token is stored.
    * 
    * @param code - The authorization code obtained from the OAuth2 authorization flow.
-   * @returns A promise that resolves to the OAuth2 credentials (including the access token).
+   * @returns {Promise<Credentials>} - A promise that resolves to the OAuth2 credentials, 
+   * including the access token.
    */
   async getToken(code: string): Promise<Credentials> {
     // Exchange the authorization code for OAuth2 tokens.
     const tokenResponse = await this.oAuth2Client.getToken(code);
-    // Set the retrieved credentials (tokens) into the OAuth2 client.
+    // Set the retrieved credentials (tokens) in the OAuth2 client.
     this.oAuth2Client.setCredentials(tokenResponse.tokens);
-    
-    // If an access token is present in the tokens, authenticate the service with it.
+
+    // If an access token is present, authenticate the service with it.
     if (tokenResponse.tokens.access_token) {
       await this.authenticate(tokenResponse.tokens.access_token);
     }
-    
+
     // Return the OAuth2 credentials.
     return tokenResponse.tokens;
   }
 
   /**
    * Generates an authorization URL that the user can visit to authorize the application.
-   * This URL redirects to a Google page where the user can consent to provide access.
    * 
-   * @returns A promise that resolves to the generated OAuth2 authorization URL.
+   * The URL redirects to Google's consent screen where the user can approve access.
+   * 
+   * @returns {Promise<string>} - A promise that resolves to the generated OAuth2 authorization URL.
    */
   async generateAuthUrl(): Promise<string> {
     // Generate and return the URL for user authorization.
     return this.oAuth2Client.generateAuthUrl({
       access_type: 'offline', // Ensures that a refresh token is returned.
-      scope: 'https://www.googleapis.com/auth/admanager', // Specifies the scope for Ad Manager.
+      scope: 'https://www.googleapis.com/auth/admanager', // Specifies the Ad Manager scope.
     });
-  }
-
-  /**
-   * Authenticates the service by setting the provided access token.
-   * This method updates the access token in the AdManagerService for future requests.
-   * 
-   * @param access_token - The OAuth2 access token to be used for authenticating API requests.
-   */
-  async authenticate(access_token: string): Promise<void> {
-    // Set the access token in the AdManagerService.
-    this.adManagerService.access_token = access_token;
   }
 }
