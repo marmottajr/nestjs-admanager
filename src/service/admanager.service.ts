@@ -4,7 +4,8 @@ import { Inject, Injectable } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { AdUnitsService } from './adunits.service';
 import { OAuth2Client } from 'google-auth-library';
-import { AdManagerServiceOptions } from '../interface/admanager.interface';
+import { AdManagerServiceOptions } from '../types/admanager.interface';
+import { NetworkService } from './network.service';
 
 /**
  * Service responsible for managing Google Ad Manager integrations.
@@ -38,6 +39,12 @@ export class AdManagerService {
    * @public
    */
   public adUnits: AdUnitsService;
+
+  /**
+   * Service to manage network.
+   * @public
+   */
+  public network: NetworkService;
 
   /**
    * The Google Ad Manager network code.
@@ -77,5 +84,6 @@ export class AdManagerService {
     // Initialize auth and adUnits services
     this.auth = new AuthService(this);
     this.adUnits = new AdUnitsService(this);
+    this.network = new NetworkService(this);
   }
 }
