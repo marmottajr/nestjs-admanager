@@ -3,7 +3,7 @@
 import { DynamicModule, Module } from '@nestjs/common';
 import { OAuth2Client } from 'google-auth-library';
 import { AdManagerService } from '../service/admanager.service';
-import { AdManagerModuleOptions } from '../interface/admanager.interface';
+import { AdManagerModuleOptions } from '../types/admanager.interface';
 
 export * from '../service/admanager.service';
 
