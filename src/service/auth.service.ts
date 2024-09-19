@@ -37,8 +37,9 @@ export class AuthService {
    * @returns {Promise<Credentials>} - A promise that resolves to the updated credentials, 
    * including the new access token and other token-related information.
    */
-  async refreshToken(): Promise<Credentials> {
+  async refreshToken(credentials: Credentials): Promise<Credentials> {
     // Refresh the access token using the OAuth2 client.
+    this.oAuth2Client.setCredentials(credentials);
     const tokenResponse = await this.oAuth2Client.refreshAccessToken();
     // Return the credentials from the token response.
     return tokenResponse.credentials;
