@@ -23,10 +23,10 @@ export type AdManagerKeys = {
  * This includes network code, application name, API version, and OAuth2 credentials.
  */
 export type AdManagerModuleOptions = {
-  network_code: string;  // The Google Ad Manager network code.
   application_name: string;  // The name of the application using the API.
   keys: AdManagerKeys;  // OAuth2 credentials required for authentication.
   api_version?: string;  // Optional: The version of the API to use (defaults to latest).
+  network_code?: string;  // The Google Ad Manager network code.
   service_url?: string;  // Optional: Custom service URL for the AdManager API.
 };
 

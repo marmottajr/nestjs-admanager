@@ -57,7 +57,7 @@ export class AdManagerService {
    * The Google Ad Manager network code.
    * @public
    */
-  public network_code: string;
+  public network_code?: string;
 
   /**
    * Name of the application using the Google Ad Manager API.
@@ -83,7 +83,7 @@ export class AdManagerService {
   constructor(
     @Inject('AD_MANAGER_OPTIONS') private options: AdManagerServiceOptions,
   ) {
-    this.network_code = options.network_code;
+    this.network_code = options.network_code ?? null;
     this.application_name = options.application_name;
     this.api_version = options.api_version ?? 'v202408';
     this.oAuth2Client = options.oAuth2Client;
@@ -93,5 +93,9 @@ export class AdManagerService {
     this.adUnits = new AdUnitsService(this);
     this.network = new NetworkService(this);
     this.site = new SiteService(this);
+  }
+
+  setNetworkCode(networkCode: string) {
+    this.network_code = networkCode;
   }
 }
