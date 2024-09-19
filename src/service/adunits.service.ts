@@ -2,6 +2,7 @@
 import { Injectable } from '@nestjs/common';
 import { AdManagerService } from './admanager.service';
 import { AdServiceBase } from './ad-service-base';
+import { AdUnit } from '../types/inventory/AdUnit';
 
 /**
  * Service responsible for managing Ad Units and Ad Unit Sizes via the Google Ad Manager API.
@@ -40,7 +41,7 @@ export class AdUnitsService extends AdServiceBase {
    * @returns A promise that resolves to an array of Ad Units.
    * @throws Throws an error if the API request fails.
    */
-  async getAdUnits(): Promise<any[]> {
+  async getAdUnits(): Promise<AdUnit[]> {
     try {
       // Create the SOAP client using the service URL.
       const client = await this.createSoapClient();
@@ -56,7 +57,7 @@ export class AdUnitsService extends AdServiceBase {
       const result = await client.getAdUnitsByStatementAsync(request);
 
       // Return the results, which contain the list of Ad Units.
-      return result[0].rval.results;
+      return result[0].rval.results as AdUnit[];
     } catch (error) {
       // Log the error and rethrow it for further handling.
       console.error('Error fetching AdUnits:', error);
