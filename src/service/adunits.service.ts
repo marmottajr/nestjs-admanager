@@ -60,7 +60,6 @@ export class AdUnitsService extends AdServiceBase {
       return result[0].rval.results as AdUnit[];
     } catch (error) {
       // Log the error and rethrow it for further handling.
-      console.error('Error fetching AdUnits:', error);
       throw error;
     }
   }
@@ -92,7 +91,6 @@ export class AdUnitsService extends AdServiceBase {
       return result[0].rval;
     } catch (error) {
       // Log the error and rethrow it for further handling.
-      console.error('Error fetching AdUnitSizes:', error);
       throw error;
     }
   }

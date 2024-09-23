@@ -71,7 +71,6 @@ export class AuthService {
       // Set the access token in the AdManagerService.
       this.adManagerService.access_token = access_token;
     } catch (error) {
-      console.error('Error authenticating:', error); // Log the error if any.
       throw error; // Propagate the error.
     }
   }

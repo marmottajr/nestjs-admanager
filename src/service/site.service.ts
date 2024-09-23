@@ -26,7 +26,6 @@ export class SiteService extends AdServiceBase {
 
       return  result[0].rval.results as Site[];
     } catch (error) {
-      console.error('Error fetching Networks:', error);
       throw error;
     }
   }
