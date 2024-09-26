@@ -1,6 +1,6 @@
 // src/service/auth.service.ts
 import { Injectable } from '@nestjs/common';
-import { OAuth2Client, Credentials } from 'google-auth-library';
+import { Credentials, OAuth2Client, TokenInfo } from 'google-auth-library';
 import { AdManagerService } from './admanager.service';
 
 /**
@@ -51,9 +51,9 @@ export class AuthService {
    * @param access_token - The access token to be validated.
    * @returns {Promise<void>} - Resolves if the token is valid; otherwise, it throws an error.
    */
-  async validateToken(access_token: string): Promise<void> {
+  async getTokenInfo(access_token: string): Promise<TokenInfo> {
     // Validate the token using the OAuth2 client.
-    await this.oAuth2Client.getTokenInfo(access_token);
+    return await this.oAuth2Client.getTokenInfo(access_token);
   }
 
   /**
@@ -67,7 +67,7 @@ export class AuthService {
   async authenticate(access_token: string): Promise<void> {
     try {
       // Validate the provided access token.
-      await this.validateToken(access_token);
+      await this.getTokenInfo(access_token);
       // Set the access token in the AdManagerService.
       this.adManagerService.access_token = access_token;
     } catch (error) {
@@ -128,7 +128,7 @@ export class AuthService {
     // Generate and return the URL for user authorization.
     return this.oAuth2Client.generateAuthUrl({
       access_type: 'offline', // Ensures that a refresh token is returned.
-      scope: 'https://www.googleapis.com/auth/admanager', // Specifies the Ad Manager scope.
+      scope: 'https://www.googleapis.com/auth/admanager https://www.googleapis.com/auth/userinfo.email', // Specifies the Ad Manager scope.
     });
   }
 }
