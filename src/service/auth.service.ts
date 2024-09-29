@@ -103,17 +103,23 @@ export class AuthService {
    * including the access token.
    */
   async getToken(code: string): Promise<Credentials> {
-    // Exchange the authorization code for OAuth2 tokens.
+    // const oAuth2Client2 = new OAuth2Client(
+    //   this.oAuth2Client._clientId,
+    //   this.oAuth2Client._clientSecret,
+    //   'http://localhost:3000/auth/callback/google', 
+    // );
+    // const tokenResponse = await oAuth2Client2.getToken(code);
+    // oAuth2Client2.setCredentials(tokenResponse.tokens);
+    // const  credentials = oAuth2Client2.credentials;
+    // // console.log('info: ', info);
+     
+    // return tokenResponse.tokens;
+    
     const tokenResponse = await this.oAuth2Client.getToken(code);
-    // Set the retrieved credentials (tokens) in the OAuth2 client.
     this.oAuth2Client.setCredentials(tokenResponse.tokens);
-
-    // If an access token is present, authenticate the service with it.
     if (tokenResponse.tokens.access_token) {
       await this.authenticate(tokenResponse.tokens.access_token);
     }
-
-    // Return the OAuth2 credentials.
     return tokenResponse.tokens;
   }
 
@@ -126,9 +132,38 @@ export class AuthService {
    */
   async generateAuthUrl(): Promise<string> {
     // Generate and return the URL for user authorization.
+    // const oAuth2Client2 = new OAuth2Client(
+    //   this.oAuth2Client._clientId,
+    //   this.oAuth2Client._clientSecret,
+    //   redirect_uri, 
+    // );
+    const scopes = [
+      'openid',
+      'https://www.googleapis.com/auth/admanager',
+      'https://www.googleapis.com/auth/userinfo.email',
+      'https://www.googleapis.com/auth/userinfo.profile',
+    ];
     return this.oAuth2Client.generateAuthUrl({
       access_type: 'offline', // Ensures that a refresh token is returned.
-      scope: 'https://www.googleapis.com/auth/admanager https://www.googleapis.com/auth/userinfo.email', // Specifies the Ad Manager scope.
+      scope: scopes.join(' '), // Specifies the Ad Manager scope.
     });
   }
+  // async generateAuthUrlLogin(redirect_uri: string): Promise<string> {
+  //   // Generate and return the URL for user authorization.
+  //   const oAuth2Client2 = new OAuth2Client(
+  //     this.oAuth2Client._clientId,
+  //     this.oAuth2Client._clientSecret,
+  //     redirect_uri, 
+  //   );
+  //   const scopes = [
+  //     'openid',
+  //     'https://www.googleapis.com/auth/admanager',
+  //     'https://www.googleapis.com/auth/userinfo.email',
+  //     'https://www.googleapis.com/auth/userinfo.profile',
+  //   ];
+  //   return oAuth2Client2.generateAuthUrl({
+  //     access_type: 'offline', // Ensures that a refresh token is returned.
+  //     scope: scopes.join(' '), // Specifies the Ad Manager scope.
+  //   });
+  // }
 }
