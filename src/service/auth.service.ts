@@ -67,7 +67,7 @@ export class AuthService {
   async authenticate(access_token: string): Promise<void> {
     try {
       // Validate the provided access token.
-      await this.getTokenInfo(access_token);
+      // await this.getTokenInfo(access_token);
       // Set the access token in the AdManagerService.
       this.adManagerService.access_token = access_token;
     } catch (error) {
