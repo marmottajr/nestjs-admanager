@@ -2,7 +2,7 @@
 import * as soap from "soap";
 
 export class SoapClientHelper {
-  static async createClientWithHeaders(serviceUrl: string, apiVersion: string, networkCode: string, applicationName: string, accessToken: string): Promise<any> {
+  static async createClientWithHeaders(serviceUrl: string, apiVersion: string, applicationName: string, accessToken: string,  networkCode?: string): Promise<any> {
     const client = await soap.createClientAsync(serviceUrl);
 
     const soapHeader = {
@@ -11,7 +11,7 @@ export class SoapClientHelper {
           'xsi:type': 'RequestHeader',
           'xmlns': `https://www.google.com/apis/ads/publisher/${apiVersion}`
         },
-        networkCode: networkCode,
+        networkCode: networkCode || null,
         applicationName: applicationName
       }
     };

@@ -78,9 +78,9 @@ export abstract class AdServiceBase {
     return await SoapClientHelper.createClientWithHeaders(
       this.service_url,        // URL of the specific WSDL service.
       this.api_version,        // Version of the Google Ad Manager API.
-      this.network_code,       // Network code of the Google Ad Manager account.
       this.application_name,   // Name of the application making the request.
-      this.access_token        // OAuth2 access token for authorization.
+      this.access_token,       // OAuth2 access token for authorization.
+      this.network_code,       // Network code of the Google Ad Manager account.
     );
   }
 }

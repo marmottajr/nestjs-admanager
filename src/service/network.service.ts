@@ -78,7 +78,6 @@ export class NetworkService extends AdServiceBase {
 
       return result;
     } catch (error) {
-      console.error('Error fetching Networks:', error); // Logs the error if any.
       throw error; // Re-throws the error to be handled by the calling code.
     }
   }
